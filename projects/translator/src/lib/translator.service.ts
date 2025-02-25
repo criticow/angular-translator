@@ -45,39 +45,34 @@ export class TranslatorService {
     this.setPreferredLanguage(config.defaultLanguage);
   }
 
+  public setTranslations(translations: Translations){
+    this.translationsSubject.next(translations);
+  }
+
+  public getTranslations(){
+    return this.translationsSubject.getValue();
+  }
+
   public setDefaultLanguage(language: string){
-    this.validateLanguage(language);
     this.defaultLanguageSubject.next(language);
     this.updateTranslation();
-  }
-
-  public setPreferredLanguage(language: string){
-    this.validateLanguage(language);
-    this.preferredLanguageSubject.next(language);
-    this.updateTranslation();
-  }
-
-  private validateLanguage(language: string){
-    if(!this.config.supportedLanguages.includes(language))
-    {
-      throw new Error(`Language "${language}" is not in the supported languages: ${this.config.supportedLanguages.join(', ')}`);
-    }
   }
 
   public getDefaultLanguage(){
     return this.defaultLanguageSubject.getValue();
   }
 
-  public getPreferredLanguage(){
-    return this.preferredLanguageSubject.getValue();
-  }
-  
-  public getTranslations(){
-    return this.translationsSubject.getValue();
+  public setPreferredLanguage(language: string){
+    this.preferredLanguageSubject.next(language);
+    this.updateTranslation();
   }
 
   public getTranslation(){
     return this.translationSubject.getValue();
+  }
+
+  public getPreferredLanguage(){
+    return this.preferredLanguageSubject.getValue();
   }
 
   private updateTranslation(){

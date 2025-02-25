@@ -1,6 +1,15 @@
 {
-  "name": "translator",
+  "name": "@waddahex/translator",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criticow/angular-translator.git"
+  },
+  "author": {
+    "email": "iuryferreira.dev@gmail.com",
+    "name": "Iury Ferreira",
+    "url": "https://ifs.waddahex.com"
+  },
   "peerDependencies": {
     "@angular/common": "^19.1.0",
     "@angular/core": "^19.1.0"

@@ -62,18 +62,26 @@ describe('TranslatorService', () => {
     expect(service.getPreferredLanguage()).toBe('pt');
   });
 
+  it('should allow to update the translations', () => {
+    const translations = {
+      en: {
+        "menu": {
+          "home": "Home",
+        }
+      },
+      pt: {
+        "menu": {
+          "home": "Início",
+        }
+      }
+    };
+
+    service.setTranslations(translations);
+    expect(service.getTranslations()).toEqual(translations);
+  });
+
   it('should initialize source translation correctly', () => {
     expect(service.getTranslations()).toEqual(mockConfig.translations);
-  });
-
-  it('should throw error if default language is not in the supported languages', () => {
-    const language = "fr";
-    expect(() => service.setDefaultLanguage(language)).toThrowError(`Language "${language}" is not in the supported languages: ${mockConfig.supportedLanguages.join(', ')}`);
-  });
-
-  it('should throw error if preferred language is not in the supported languages', () => {
-    const language = "fr";
-    expect(() => service.setPreferredLanguage(language)).toThrowError(`Language "${language}" is not in the supported languages: ${mockConfig.supportedLanguages.join(', ')}`);
   });
 
   it('should update translation based on preferred language', () => {
@@ -82,37 +90,5 @@ describe('TranslatorService', () => {
 
     service.setPreferredLanguage('pt');
     expect(service.getTranslation()).toEqual(mockConfig.translations['pt']);
-  });
-});
-
-describe('TranslatorService with invalid config', () => {
-  const invalidConfig: TranslatorConfig = {
-    supportedLanguages: ["en", "pt"],
-    defaultLanguage: "fr", // default language not supported
-    translations: {
-      en: {
-        "menu": {
-          "home": "Home",
-          "about": "About"
-        }
-      },
-      pt: {
-        "menu": {
-          "home": "Início",
-          "about": "Sobre"
-        }
-      }
-    }
-  };
-
-  it('should throw error if default language is not in the supported languages', () => {
-    expect(() => 
-      TestBed.configureTestingModule({
-        providers: [
-          {provide: TRANSLATOR_CONFIG, useValue: invalidConfig},
-          TranslatorService
-        ]
-      }).inject(TranslatorService)
-    ).toThrowError(`Language "${invalidConfig.defaultLanguage}" is not in the supported languages: ${invalidConfig.supportedLanguages.join(', ')}`)
   });
 });
